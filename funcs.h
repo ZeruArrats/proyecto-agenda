@@ -1,24 +1,26 @@
 #pragma once
 #include <windows.h>
 #include <fstream>
-#include <CommDlg.h>
-#include <ctime>
-#include "resource.h"
-#include "struct.h"
+#include <CommDlg.h>	//Common dialog
+#include <ctime>	//Getting time stucture
+#include "resource.h"	//Winapi control ids
+#include "struct.h"	//Data structures
 
 using namespace std;
 
-// Guarda el contnido de la lista en archivo binario 
+// Borra los nodos de una lista
 void cleanMem(contact *head){
 	contact *aux=NULL;
 	aux=head;
 	if(head!=NULL)
-		while(aux->next!=NULL){
-			aux=aux->next;
-			delete aux->last;
+		while(aux->next!=NULL){		//Recorrer la lista hasta llegar al último nodo
+			aux=aux->next;			
+			delete aux->last;		//Borrar nodo actual
 		}
-		delete aux;
+		delete aux;					//Borrar último nodo
 }
+
+// Guarda el contenido de la lista en archivo binario 
 void guardar(contact *head){
 	ofstream save; 
 	contact *aux=NULL;
@@ -42,6 +44,7 @@ void guardar(contact *head){
 		cleanMem(head);
 
 }
+
 //Crea una lista a partir de los datos de un archivo
 contact* cargar(){
 	ifstream load; 
@@ -132,10 +135,10 @@ contact *del_cont(contact *aux,contact *head){
 char * concat_data(contact *aux){
 	char str[MAX_PATH];
 	ZeroMemory(str,sizeof(str));
-	strcat(str,"Categor�a: ");
+	strcat(str,"Categoría: ");
 	strcat(str,aux->cat);
 	strcat(str,"\r\n");
-	strcat(str,"Direcci�n: ");
+	strcat(str,"Dirección: ");
 	strcat(str,aux->dir);
 	strcat(str,"\r\n");
 	strcat(str,"Telefono: ");
